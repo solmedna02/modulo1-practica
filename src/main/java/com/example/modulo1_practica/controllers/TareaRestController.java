@@ -62,7 +62,7 @@ public class TareaRestController {
     }
 
     @DeleteMapping
-    public ResponseEntity<String>eliminarTarea(@Valid Long id){
+    public ResponseEntity<String>eliminarTarea(@PathVariable Long id){
         log.info("Entrando al metodo EliminarTarea");
         tareaService.eliminarTarea(id);
         return ResponseEntity.ok("Estudiante Eliminado");

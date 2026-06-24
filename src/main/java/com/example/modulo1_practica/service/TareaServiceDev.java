@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.management.RuntimeErrorException;
+
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +40,10 @@ public class TareaServiceDev implements TareaService{
 
     @Override
     public void eliminarTarea(Long id) {
-        tareas.remove(id);
+       if (!tareas.containsKey(id)) {
+        throw new RuntimeException("Tarea no existe");
+       }
+       tareas.remove(id);
     }
 
     @Override
