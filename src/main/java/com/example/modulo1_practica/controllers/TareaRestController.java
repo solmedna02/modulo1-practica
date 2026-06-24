@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.modulo1_practica.entity.Tarea;
+import com.example.modulo1_practica.entity.dto.TareaDto;
+import com.example.modulo1_practica.exception.TareaInvalidaException;
 import com.example.modulo1_practica.service.TareaService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/tareas")
@@ -29,11 +33,22 @@ public class TareaRestController {
 
     @GetMapping("/{id}")
     public Tarea buscarPorId(@PathVariable Long id) {
-        return tareaService.buscarPorId(id);
+        Tarea tarea = tareaService.buscarPorId(id);
+
+        if (tarea == null) {
+            throw new TareaInvalidaException("Tarea no encontrada con id: " + id);
+        }
+
+        return tarea;
     }
 
     @PostMapping
-    public Tarea crearTarea(@RequestBody Tarea tarea) {
+    public Tarea crearTarea(@Valid @RequestBody TareaDto dto) {
+        Tarea tarea = new Tarea();
+        tarea.setEstado(dto.getEstado());
+        tarea.setAsignatura(dto.getAsignatura());
+        tarea.setNombre(dto.getNombre());
+        
         return tareaService.guardarTarea(tarea);
     }
 }

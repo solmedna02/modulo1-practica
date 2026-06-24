@@ -13,5 +13,4 @@ public interface TareaService{
     
     void eliminarTarea(Long id);
 
-
 }
