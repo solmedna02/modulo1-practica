@@ -10,8 +10,11 @@ import org.springframework.stereotype.Service;
 
 import com.example.modulo1_practica.entity.Tarea;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
 @Profile(value = "dev")
+@Slf4j
 public class TareaServiceDev implements TareaService{
     private final Map<Long, Tarea> tareas = new HashMap<>();
     private Long contador = 1L;
@@ -37,4 +40,20 @@ public class TareaServiceDev implements TareaService{
     public void eliminarTarea(Long id) {
         tareas.remove(id);
     }
+
+    @Override
+    public Tarea actualizarTarea(Long id, Tarea tareaActualizada) {
+        Tarea tareaExistente = tareas.get(id);
+        if (tareaExistente==null){
+            return null;
+        }
+
+        tareaExistente.setAsignatura(tareaActualizada.getAsignatura());
+        tareaExistente.setNombre(tareaActualizada.getNombre());
+        tareaExistente.setEstado(tareaActualizada.getEstado());
+        tareas.put(id, tareaExistente);
+        return tareaExistente;
+    }
+
+
 }

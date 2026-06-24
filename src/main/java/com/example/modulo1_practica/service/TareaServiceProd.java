@@ -24,4 +24,9 @@ public class TareaServiceProd implements TareaService{
     @Override
     public void eliminarTarea(Long id) {
     }
+
+    @Override
+    public Tarea actualizarTarea(Long id, Tarea tareaActualizada) {
+        return tareaActualizada;
+    }
 }

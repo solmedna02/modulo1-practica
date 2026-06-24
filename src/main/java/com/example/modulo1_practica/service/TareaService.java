@@ -13,4 +13,6 @@ public interface TareaService{
     
     void eliminarTarea(Long id);
 
+    Tarea actualizarTarea(Long id, Tarea tareaActualizada);
+
 }
