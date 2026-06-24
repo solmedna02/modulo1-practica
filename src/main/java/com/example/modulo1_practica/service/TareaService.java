@@ -11,7 +11,7 @@ public interface TareaService{
 
     Tarea guardarTarea(Tarea tarea);
     
-    void eliminarTarea(Long id);
+    boolean eliminarTarea(Long id);
 
     Tarea actualizarTarea(Long id, Tarea tareaActualizada);
 

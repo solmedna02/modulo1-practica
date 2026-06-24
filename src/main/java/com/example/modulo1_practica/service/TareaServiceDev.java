@@ -3,9 +3,7 @@ package com.example.modulo1_practica.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import javax.management.RuntimeErrorException;
+//import java.util.Map;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -18,7 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 @Profile(value = "dev")
 @Slf4j
 public class TareaServiceDev implements TareaService{
-    private final Map<Long, Tarea> tareas = new HashMap<>();
+    //private final Map<Long, Tarea> tareas = new HashMap<>();
+    HashMap<Long,Tarea> tareas= new HashMap<>();
+
     private Long contador = 1L;
 
     @Override
@@ -33,18 +33,33 @@ public class TareaServiceDev implements TareaService{
 
     @Override
     public Tarea guardarTarea(Tarea tarea) {
+        
         tarea.setId(contador++);
         tareas.put(tarea.getId(), tarea);
         return tarea;
     }
 
     @Override
-    public void eliminarTarea(Long id) {
-       if (!tareas.containsKey(id)) {
+    public boolean eliminarTarea(Long id) {
+        System.out.println(id);
+        System.out.println("\n");
+
+
+       if (tareas.containsKey(id)) {
+        tareas.remove(id);
+        return true;
+       } else{throw new RuntimeException("Tarea no existe");}
+       
+       
+        
+    }
+  
+     /*
+      if (!tareas.containsKey(id)) {
         throw new RuntimeException("Tarea no existe");
        }
        tareas.remove(id);
-    }
+      */
 
     @Override
     public Tarea actualizarTarea(Long id, Tarea tareaActualizada) {

@@ -22,7 +22,8 @@ public class TareaServiceProd implements TareaService{
     }
 
     @Override
-    public void eliminarTarea(Long id) {
+    public boolean eliminarTarea(Long id) {
+        return true;
     }
 
     @Override
