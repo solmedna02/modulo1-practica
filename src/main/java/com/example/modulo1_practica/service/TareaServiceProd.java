@@ -3,8 +3,12 @@ package com.example.modulo1_practica.service;
 import java.util.Collections;
 import java.util.List;
 
-import com.example.modulo1_practica.entity.Tarea;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
 
+import com.example.modulo1_practica.entity.Tarea;
+@Service
+@Profile(value = "prod")
 public class TareaServiceProd implements TareaService{
     @Override
     public List<Tarea> listarTareas() {
