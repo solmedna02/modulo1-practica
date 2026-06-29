@@ -1,14 +1,17 @@
 package com.example.modulo1_practica.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 //import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.modulo1_practica.entity.Tarea;
+import com.example.modulo1_practica.entity.dto.TareaDto;
+import com.example.modulo1_practica.entity.dto.TareaMapper;
+import com.example.modulo1_practica.repository.TareaRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,63 +19,49 @@ import lombok.extern.slf4j.Slf4j;
 @Profile(value = "dev")
 @Slf4j
 public class TareaServiceDev implements TareaService{
-    //private final Map<Long, Tarea> tareas = new HashMap<>();
-    HashMap<Long,Tarea> tareas= new HashMap<>();
-
-    private Long contador = 1L;
+    @Autowired
+    private TareaRepository repository;
 
     @Override
-    public List<Tarea> listarTareas() {
-        return new ArrayList<>(tareas.values());
+    @Transactional(readOnly = true)
+    public List<TareaDto> listarTareas() {
+        return repository.findAll().stream()
+            .map(TareaMapper.mapper::tareaToTareaDto)
+            .toList();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Tarea buscarPorId(Long id) {
-        return tareas.get(id);
+        return repository.findById(id).orElse(null);
     }
 
     @Override
-    public Tarea guardarTarea(Tarea tarea) {
-        
-        tarea.setId(contador++);
-        tareas.put(tarea.getId(), tarea);
-        return tarea;
+    public Tarea guardarTarea(TareaDto dto) {
+        Tarea tarea = TareaMapper.mapper.tareaDtoToTarea(dto);
+        return repository.save(tarea);
     }
 
     @Override
     public boolean eliminarTarea(Long id) {
-        System.out.println(id);
-        System.out.println("\n");
-
-
-       if (tareas.containsKey(id)) {
-        tareas.remove(id);
-        return true;
-       } else{throw new RuntimeException("Tarea no existe");}
-       
-       
-        
+       if(repository.existsById(id)){
+            repository.deleteById(id);
+            return true;
+        }
+        return false;
     }
-  
-     /*
-      if (!tareas.containsKey(id)) {
-        throw new RuntimeException("Tarea no existe");
-       }
-       tareas.remove(id);
-      */
+
 
     @Override
-    public Tarea actualizarTarea(Long id, Tarea tareaActualizada) {
-        Tarea tareaExistente = tareas.get(id);
-        if (tareaExistente==null){
-            return null;
-        }
+    public Tarea actualizarTarea(Long id, TareaDto dto) {
+        Tarea tarea = repository.findById(id)
+        .orElseThrow(() -> new RuntimeException("Tarea no encontrada"));
 
-        tareaExistente.setAsignatura(tareaActualizada.getAsignatura());
-        tareaExistente.setNombre(tareaActualizada.getNombre());
-        tareaExistente.setEstado(tareaActualizada.getEstado());
-        tareas.put(id, tareaExistente);
-        return tareaExistente;
+        tarea.setNombre(dto.getNombre());
+        tarea.setAsignatura(dto.getAsignatura());
+        tarea.setEstado(dto.getEstado());
+
+        return repository.save(tarea);
     }
 
 

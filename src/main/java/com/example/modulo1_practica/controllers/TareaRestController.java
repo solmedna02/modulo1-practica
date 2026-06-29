@@ -34,7 +34,7 @@ public class TareaRestController {
     }
 
     @GetMapping
-    public List<Tarea> listarTareas() {
+    public List<TareaDto> listarTareas() {
         log.info("Entrando al metodo ListarTareas");
         return tareaService.listarTareas();
     }
@@ -58,7 +58,7 @@ public class TareaRestController {
         tarea.setAsignatura(dto.getAsignatura());
         tarea.setNombre(dto.getNombre());
         
-        return tareaService.guardarTarea(tarea);
+        return tareaService.guardarTarea(dto);
     }
 
     @DeleteMapping("/{id}")
@@ -68,7 +68,7 @@ public class TareaRestController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Tarea> actualizarTodo(@PathVariable Long id,@Valid @RequestBody Tarea tarea){
+    public ResponseEntity<Tarea> actualizarTodo(@PathVariable Long id,@Valid @RequestBody TareaDto tarea){
         log.info("Entrando al metodo Actualizar");
         return ResponseEntity.ok(tareaService.actualizarTarea(id, tarea));
     }

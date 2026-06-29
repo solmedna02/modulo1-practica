@@ -7,11 +7,12 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.example.modulo1_practica.entity.Tarea;
+import com.example.modulo1_practica.entity.dto.TareaDto;
 @Service
 @Profile(value = "prod")
 public class TareaServiceProd implements TareaService{
     @Override
-    public List<Tarea> listarTareas() {
+    public List<TareaDto> listarTareas() {
         return Collections.emptyList();
     }
 
@@ -21,17 +22,19 @@ public class TareaServiceProd implements TareaService{
     }
 
     @Override
-    public Tarea guardarTarea(Tarea tarea) {
-        return tarea;
-    }
-
-    @Override
     public boolean eliminarTarea(Long id) {
         return true;
     }
 
     @Override
-    public Tarea actualizarTarea(Long id, Tarea tareaActualizada) {
-        return tareaActualizada;
+    public Tarea actualizarTarea(Long id, TareaDto dto) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'actualizarTarea'");
+    }
+
+    @Override
+    public Tarea guardarTarea(TareaDto dto) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'guardarTarea'");
     }
 }
