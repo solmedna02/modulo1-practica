@@ -3,6 +3,7 @@ package com.example.modulo1_practica.service;
 import java.util.List;
 //import java.util.Map;
 
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -22,13 +23,15 @@ public class TareaServiceDev implements TareaService{
     @Autowired
     private TareaRepository repository;
 
+    private final TareaMapper tareaMapper = Mappers.getMapper(TareaMapper.class);
+
     @Override
     @Transactional(readOnly = true)
     public List<TareaDto> listarTareas() {
-        return repository.findAll().stream()
-            .map(TareaMapper.mapper::tareaToTareaDto)
+    return repository.findAll().stream()
+            .map(tareaMapper::tareaToTareaDto)
             .toList();
-    }
+}
 
     @Override
     @Transactional(readOnly = true)
@@ -38,7 +41,7 @@ public class TareaServiceDev implements TareaService{
 
     @Override
     public Tarea guardarTarea(TareaDto dto) {
-        Tarea tarea = TareaMapper.mapper.tareaDtoToTarea(dto);
+        Tarea tarea = tareaMapper.tareaDtoToTarea(dto);
         return repository.save(tarea);
     }
 
