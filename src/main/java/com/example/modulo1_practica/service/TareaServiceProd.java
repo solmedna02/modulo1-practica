@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.modulo1_practica.entity.Tarea;
@@ -28,13 +30,41 @@ public class TareaServiceProd implements TareaService{
 
     @Override
     public Tarea actualizarTarea(Long id, TareaDto dto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'actualizarTarea'");
+        return null;
     }
 
     @Override
     public Tarea guardarTarea(TareaDto dto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'guardarTarea'");
+        return null;
     }
+
+    //querys
+    
+    @Override
+    public List<Tarea> buscarPorEstado(Boolean estado) {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public List<Tarea> buscarPorNombre(String nombre) {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public Tarea buscarPorAsignatura(String asignatura) {
+        return null;
+    }
+
+    @Override
+    public Tarea buscarPorNombreNative(String nombre) {
+        return null;
+    }
+
+    @Override
+    public Page<TareaDto> buscarPorEstadoPaginado(Boolean estado, Pageable pageable) {
+        return Page.empty();
+    }
+
+
+    
 }

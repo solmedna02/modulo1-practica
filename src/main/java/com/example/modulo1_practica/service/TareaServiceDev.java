@@ -6,6 +6,8 @@ import java.util.List;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,6 +67,34 @@ public class TareaServiceDev implements TareaService{
         tarea.setEstado(dto.getEstado());
 
         return repository.save(tarea);
+    }
+
+    //querys
+    public List<Tarea> buscarPorEstado(Boolean estado){
+        return repository.findByEstado(estado);
+    }
+
+    public List<Tarea> buscarPorNombre(String nombre){
+        return repository.findByNombreContainingIgnoreCase(nombre);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Tarea buscarPorAsignatura(String asignatura) {
+        return repository.findByAsignatura(asignatura);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Tarea buscarPorNombreNative(String nombre) {
+        return repository.getTareaByNameNative(nombre);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<TareaDto> buscarPorEstadoPaginado(Boolean estado, Pageable pageable) {
+        return repository.findByEstado(estado, pageable)
+                .map(tareaMapper::tareaToTareaDto);
     }
 
 

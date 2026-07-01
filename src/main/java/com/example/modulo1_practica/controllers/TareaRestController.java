@@ -2,6 +2,8 @@ package com.example.modulo1_practica.controllers;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.modulo1_practica.entity.Tarea;
@@ -70,5 +73,34 @@ public class TareaRestController {
     public ResponseEntity<Tarea> actualizarTodo(@PathVariable Long id,@Validated(Editar.class) @RequestBody TareaDto tarea){
         log.info("Entrando al metodo Actualizar con ID: {}", id);
         return ResponseEntity.ok(tareaService.actualizarTarea(id, tarea));
+    }
+
+    //querys
+
+    @GetMapping("/estado/{estado}")
+    public List<Tarea> buscarPorEstado(@PathVariable Boolean estado){
+        return tareaService.buscarPorEstado(estado);
+    }
+
+    @GetMapping("/buscar")
+    public List<Tarea> buscar(@RequestParam String nombre){
+        return tareaService.buscarPorNombre(nombre);
+    }
+
+    @GetMapping("/asignatura/{asignatura}")
+    public Tarea buscarPorAsignatura(@PathVariable String asignatura) {
+        return tareaService.buscarPorAsignatura(asignatura);
+    }
+
+    @GetMapping("/native/{nombre}")
+    public Tarea buscarPorNombreNative(@PathVariable String nombre) {
+        return tareaService.buscarPorNombreNative(nombre);
+    }
+
+    @GetMapping("/estado-paginado")
+    public Page<TareaDto> buscarPorEstadoPaginado(
+            @RequestParam Boolean estado,
+            Pageable pageable) {
+        return tareaService.buscarPorEstadoPaginado(estado, pageable);
     }
 }
