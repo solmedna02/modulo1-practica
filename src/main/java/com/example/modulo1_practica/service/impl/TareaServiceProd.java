@@ -1,4 +1,4 @@
-package com.example.modulo1_practica.service;
+package com.example.modulo1_practica.service.impl;
 
 import java.util.Collections;
 import java.util.List;
@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.modulo1_practica.entity.Tarea;
 import com.example.modulo1_practica.entity.dto.TareaDto;
+import com.example.modulo1_practica.service.TareaService;
 @Service
 @Profile(value = "prod")
 public class TareaServiceProd implements TareaService{

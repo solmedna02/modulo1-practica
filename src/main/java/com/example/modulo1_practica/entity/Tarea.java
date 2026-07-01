@@ -47,14 +47,14 @@ public class Tarea {
         this.updateAt= LocalDate.now();
     }
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(
         name = "usuario_id",
         referencedColumnName = "idUsuario"
     )
     private Usuario usuario;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(
         name = "categoria_id",
         referencedColumnName = "idCategoria"
