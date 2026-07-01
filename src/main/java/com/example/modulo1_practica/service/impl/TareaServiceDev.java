@@ -2,6 +2,8 @@ package com.example.modulo1_practica.service.impl;
 
 import java.util.List;
 //import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +46,7 @@ public class TareaServiceDev implements TareaService{
     return repository.findAll().stream()
             .map(tareaMapper::tareaToTareaDto)
             .toList();
-}
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -110,6 +112,12 @@ public class TareaServiceDev implements TareaService{
         
     }
 
+    @Override
+    public List<Tarea> agruparPorEstado() {
+        //return repository.findAll().stream().collect(Collectors.groupingBy(estado-> estado.getEstado()));
+        return null;
+    }
+
     //querys
     public List<Tarea> buscarPorEstado(Boolean estado){
         return repository.findByEstado(estado);
@@ -137,6 +145,8 @@ public class TareaServiceDev implements TareaService{
         return repository.findByEstado(estado, pageable)
                 .map(tareaMapper::tareaToTareaDto);
     }
+
+    
 
 
 

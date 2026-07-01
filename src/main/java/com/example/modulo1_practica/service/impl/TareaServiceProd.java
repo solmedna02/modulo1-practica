@@ -39,6 +39,12 @@ public class TareaServiceProd implements TareaService{
         return null;
     }
 
+    @Override
+    public List<Tarea> agruparPorEstado() {
+        
+        return null ;
+    }
+
     //querys
     
     @Override
@@ -70,6 +76,8 @@ public class TareaServiceProd implements TareaService{
     public Tarea actualizarDatos(Long id, TareaDto dto) {
         return null;
     }
+
+    
 
 
     
