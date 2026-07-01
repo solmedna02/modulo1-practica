@@ -41,8 +41,7 @@ public class CategoriaServiceDev implements CategoriaService{
 
     @Override
     public Categoria actualizCategoria(Long id, Categoria categoria) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'actualizCategoria'");
+        return repository.save(categoria);
     }
 
 }

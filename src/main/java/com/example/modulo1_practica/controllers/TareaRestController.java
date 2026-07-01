@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.modulo1_practica.entity.Tarea;
 import com.example.modulo1_practica.entity.dto.TareaDto;
-import com.example.modulo1_practica.exception.TareaInvalidaException;
 import com.example.modulo1_practica.service.TareaService;
 import com.example.modulo1_practica.validation.Crear;
 import com.example.modulo1_practica.validation.Editar;
@@ -40,33 +40,42 @@ public class TareaRestController {
     }
 
     @GetMapping
-    public List<TareaDto> listarTareas() {
+    public ResponseEntity<List<TareaDto>> listarTareas() {
         log.info("Entrando al metodo ListarTareas");
-        return tareaService.listarTareas();
+        return ResponseEntity.ok(tareaService.listarTareas());
     }
 
     @GetMapping("/{id}")
-    public Tarea buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<?> buscarPorId(@PathVariable Long id) {
         log.info("Entrando al metodo buscarPorID");
+        
         Tarea tarea = tareaService.buscarPorId(id);
         if (tarea == null) {
-            throw new TareaInvalidaException("Tarea no encontrada con id: " + id);
+            //throw new TareaInvalidaException("Tarea no encontrada con id: " + id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tarea no encontrada por id:"+ id);
+        }else{
+            return ResponseEntity.ok(tarea);
         }
 
-        return tarea;
+        
     }
 
     @PostMapping
-    public Tarea crearTarea(@Validated(Crear.class) @RequestBody TareaDto dto) {
+    public ResponseEntity<?> crearTarea(@Validated(Crear.class) @RequestBody TareaDto dto) {
         log.info("Entrando al metodo crearTarea");
-        
-        return tareaService.guardarTarea(dto);
+        tareaService.guardarTarea(dto);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body("Tarea ha sido creada");
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String>eliminarTarea(@Valid @PathVariable Long id){
-        tareaService.eliminarTarea(id);
-        return ResponseEntity.ok("Tarea Eliminada");
+        if (tareaService.eliminarTarea(id)) {
+            return ResponseEntity.ok("Tarea fue eliminada");
+        }else{
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No existe esa tarea");
+        }
+    
     }
 
     @PutMapping("/{id}")

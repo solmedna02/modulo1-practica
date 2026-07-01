@@ -66,6 +66,11 @@ public class TareaServiceProd implements TareaService{
         return Page.empty();
     }
 
+    @Override
+    public Tarea actualizarDatos(Long id, TareaDto dto) {
+        return null;
+    }
+
 
     
 }

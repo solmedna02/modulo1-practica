@@ -90,6 +90,26 @@ public class TareaServiceDev implements TareaService{
         return repository.save(tarea);
     }
 
+    @Override
+    public Tarea actualizarDatos(Long id, TareaDto dto) {
+        Tarea tarea= repository.findById(id).orElseThrow(()-> new RuntimeException("Tarea no encontrada"));
+
+        if (dto.getNombre()!=null) {
+            dto.setNombre(dto.getNombre());
+        }
+
+        if (dto.getAsignatura()!=null) {
+            dto.setAsignatura(dto.getAsignatura());
+        }
+
+        if (dto.getEstado()!=null) {
+            dto.setEstado(dto.getEstado());
+        }
+
+        return repository.save(tarea);
+        
+    }
+
     //querys
     public List<Tarea> buscarPorEstado(Boolean estado){
         return repository.findByEstado(estado);
@@ -117,6 +137,7 @@ public class TareaServiceDev implements TareaService{
         return repository.findByEstado(estado, pageable)
                 .map(tareaMapper::tareaToTareaDto);
     }
+
 
 
 }

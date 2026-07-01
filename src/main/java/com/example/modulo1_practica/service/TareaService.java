@@ -19,6 +19,8 @@ public interface TareaService{
 
     Tarea actualizarTarea(Long id, TareaDto dto );
 
+    Tarea actualizarDatos(Long id, TareaDto dto);
+
     //querys
 
     List<Tarea> buscarPorEstado(Boolean estado);
