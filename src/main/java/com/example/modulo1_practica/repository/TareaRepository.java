@@ -55,12 +55,12 @@ public interface TareaRepository extends JpaRepository<Tarea, Long>{
     
     @Query(
         value = "SELECT " +
-                "  usuario AS usuario, " +
+                "  usuario_id AS usuario, " +
                 "  COUNT(*) AS totalTareas, " +
                 "  SUM(CASE WHEN estado_tarea = 1 THEN 1 ELSE 0 END) AS completadas, " +
                 "  SUM(CASE WHEN estado_tarea = 0 THEN 1 ELSE 0 END) AS pendientes " +
                 "FROM tareastbl " +
-                "GROUP BY usuario", 
+                "GROUP BY usuario_id", 
         nativeQuery = true
     )
     List<EstadisticasProjection> getEstadisticasPorUsuario();

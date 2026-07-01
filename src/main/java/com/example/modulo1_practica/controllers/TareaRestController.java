@@ -3,6 +3,7 @@ package com.example.modulo1_practica.controllers;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,8 @@ import com.example.modulo1_practica.entity.Tarea;
 import com.example.modulo1_practica.entity.dto.TareaDto;
 import com.example.modulo1_practica.exception.TareaInvalidaException;
 import com.example.modulo1_practica.service.TareaService;
+import com.example.modulo1_practica.validation.Crear;
+import com.example.modulo1_practica.validation.Editar;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -51,12 +54,8 @@ public class TareaRestController {
     }
 
     @PostMapping
-    public Tarea crearTarea(@Valid @RequestBody TareaDto dto) {
-        log.info("Entrando al metodo crearTareas");
-        Tarea tarea = new Tarea();
-        tarea.setEstado(dto.getEstado());
-        tarea.setAsignatura(dto.getAsignatura());
-        tarea.setNombre(dto.getNombre());
+    public Tarea crearTarea(@Validated(Crear.class) @RequestBody TareaDto dto) {
+        log.info("Entrando al metodo crearTarea");
         
         return tareaService.guardarTarea(dto);
     }
@@ -64,12 +63,12 @@ public class TareaRestController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String>eliminarTarea(@Valid @PathVariable Long id){
         tareaService.eliminarTarea(id);
-        return ResponseEntity.ok("Estudiante Eliminado");
+        return ResponseEntity.ok("Tarea Eliminada");
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Tarea> actualizarTodo(@PathVariable Long id,@Valid @RequestBody TareaDto tarea){
-        log.info("Entrando al metodo Actualizar");
+    public ResponseEntity<Tarea> actualizarTodo(@PathVariable Long id,@Validated(Editar.class) @RequestBody TareaDto tarea){
+        log.info("Entrando al metodo Actualizar con ID: {}", id);
         return ResponseEntity.ok(tareaService.actualizarTarea(id, tarea));
     }
 }

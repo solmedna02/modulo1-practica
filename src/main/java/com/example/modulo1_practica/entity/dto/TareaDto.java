@@ -4,6 +4,7 @@ import com.example.modulo1_practica.validation.Crear;
 import com.example.modulo1_practica.validation.Editar;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 import lombok.Data;
 
@@ -18,6 +19,10 @@ public class TareaDto {
     @NotBlank(message = "La asignatura es obligatoria", groups = {Crear.class, Editar.class})
     private String asignatura;
 
-    @NotBlank(message = "Obligatorio asignar si esta completa", groups = {Crear.class, Editar.class})
+    @NotNull(message = "Obligatorio asignar si esta completa", groups = {Crear.class, Editar.class})
     private Boolean estado;
+
+    private Long usuarioId;
+
+    private Long categoriaId;
 }
