@@ -22,9 +22,13 @@ public interface TareaService{
     //querys
 
     List<Tarea> buscarPorEstado(Boolean estado);
+
     List<Tarea> buscarPorNombre(String nombre);
+
     Tarea buscarPorAsignatura(String asignatura);
+
     Tarea buscarPorNombreNative(String nombre);
+    
     Page<TareaDto> buscarPorEstadoPaginado(Boolean estado, Pageable pageable);
 
 }

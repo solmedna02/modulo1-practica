@@ -77,8 +77,8 @@ public class TareaRestController {
 
     //querys
 
-    @GetMapping("/estado/{estado}")
-    public List<Tarea> buscarPorEstado(@PathVariable Boolean estado){
+    @GetMapping("/estado")
+    public List<Tarea> buscarPorEstado(@RequestParam Boolean estado){
         return tareaService.buscarPorEstado(estado);
     }
 
@@ -87,13 +87,13 @@ public class TareaRestController {
         return tareaService.buscarPorNombre(nombre);
     }
 
-    @GetMapping("/asignatura/{asignatura}")
-    public Tarea buscarPorAsignatura(@PathVariable String asignatura) {
+    @GetMapping("/asignatura")
+    public Tarea buscarPorAsignatura(@RequestParam String asignatura) {
         return tareaService.buscarPorAsignatura(asignatura);
     }
 
-    @GetMapping("/native/{nombre}")
-    public Tarea buscarPorNombreNative(@PathVariable String nombre) {
+    @GetMapping("/native")
+    public Tarea buscarPorNombreNative(@RequestParam String nombre) {
         return tareaService.buscarPorNombreNative(nombre);
     }
 

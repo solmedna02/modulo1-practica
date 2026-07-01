@@ -8,6 +8,7 @@ import com.example.modulo1_practica.entity.Tarea;
 @Mapper(componentModel = "spring")
 public interface TareaMapper {
 
+    
     TareaDto tareaToTareaDto(Tarea tarea);
 
     @Mapping(target = "createAt", ignore = true)
